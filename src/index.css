@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+html.is-spatial {
+    background-color: transparent;
+    --xr-background-material: transparent;
+}
+
+.xr-transparent {
+    --xr-background-material: transparent;
+}
+
+.xr-translucent {
+    --xr-background-material: translucent;
+}
+
+.xr-regular {
+    --xr-background-material: regular;
+}
+
+.xr-thin {
+    --xr-background-material: thin;
+}
+
+.xr-thick {
+    --xr-background-material: thick;
+}
