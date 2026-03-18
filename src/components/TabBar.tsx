@@ -9,7 +9,9 @@ import ic5 from "../../.figma/image/screenshot_993_3494.png";
 export default function TabBar() {
   const icons = [ic1, ic2, ic3, ic4, ic5];
   return (
-    <div className="inline-flex flex-col items-start rounded-[34px] bg-neutral-500/30 p-3 w-[68px] gap-3 backdrop-blur-xl shadow border border-black/10">
+    <div enable-xr 
+    style={{"--xr-back": 50, "--xr-background-material": "regular"}}
+    className="inline-flex flex-col items-start rounded-[34px] p-3 w-[68px] gap-3 shadow border border-black/10">
       {icons.map((src, idx) => (
         <button
           key={idx}

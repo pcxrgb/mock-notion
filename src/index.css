@@ -24,3 +24,8 @@ html.is-spatial {
 .xr-thick {
     --xr-background-material: thick;
 }
+
+/* Elevate the floating TabBar in spatial mode so it sits in front of the page */
+html.is-spatial .tabbar-overlay {
+    --xr-back: 50;
+}
