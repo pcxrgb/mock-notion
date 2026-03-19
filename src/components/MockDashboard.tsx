@@ -60,7 +60,7 @@ export default function MockDashboard() {
     enable-xr
     style={{"--xr-background-material": "regular"}}
     className="w-screen h-screen p-12 flex flex-col items-center shadow border border-white/10 overflow-hidden">
-      <h1 className="text-5xl font-bold text-white">Mock Notion</h1>
+      <h1 className="text-5xl font-bold text-white">Good afternoon</h1>
 
       <div className="relative mt-6 w-full max-w-[1200px] flex-1 min-h-0 flex flex-col gap-8">
         <section>
