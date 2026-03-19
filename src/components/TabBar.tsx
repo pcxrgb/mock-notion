@@ -9,6 +9,16 @@ import ic5 from "../../.figma/image/screenshot_993_3494.png";
 
 export default function TabBar() {
   const icons = [ic1, ic2, ic3, ic4, ic5];
+  const openAiWindow = () => {
+    initScene("aiScene", (defaultConfig) => {
+      return {
+        ...defaultConfig,
+        defaultSize: { width: 900, height: 700 },
+      };
+    });
+    const url = new URL("/ai", window.location.origin).toString();
+    window.open(url, "aiScene");
+  };
   const openTodoWindow = () => {
     initScene("todoScene", (defaultConfig) => {
       return {
@@ -33,7 +43,7 @@ export default function TabBar() {
               : "hover:bg-white/10",
           ].join(" ")}
           aria-label={`tab-${idx + 1}`}
-          onClick={idx === 1 ? openTodoWindow : undefined}
+          onClick={idx === 0 ? openAiWindow : idx === 1 ? openTodoWindow : undefined}
         >
           <img
             src={src}
