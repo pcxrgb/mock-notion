@@ -1,6 +1,7 @@
 import TabBar from "./components/TabBar";
 import MockDashboard from "./components/MockDashboard";
 import TodoPage from "./components/TodoPage";
+import AiPage from "./components/AiPage";
 import { Routes, Route, useLocation } from "react-router-dom";
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
           <Routes>
             <Route path="/" element={<MockDashboard />} />
             <Route path="/todo" element={<TodoPage />} />
+            <Route path="/ai" element={<AiPage />} />
           </Routes>
         </div>
       </div>
