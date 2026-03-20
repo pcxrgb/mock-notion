@@ -1,34 +1,28 @@
 import React from "react";
 import { initScene } from "@webspatial/react-sdk";
 
-import ic1 from "../../.figma/image/screenshot_993_3474.png";
-import ic2 from "../../.figma/image/screenshot_993_3477.png";
-import ic3 from "../../.figma/image/screenshot_993_3483.png";
-import ic4 from "../../.figma/image/screenshot_993_3489.png";
-import ic5 from "../../.figma/image/screenshot_993_3494.png";
+import ic1 from "../../.figma/image/screenshot_993_3474.png"; // Home
+import ic2 from "../../.figma/image/screenshot_993_3477.png"; // Document View
+import ic3 from "../../.figma/image/screenshot_993_3483.png"; // AI Chat
+import ic4 from "../../.figma/image/screenshot_993_3489.png"; // TODO
+import ic5 from "../../.figma/image/screenshot_993_3494.png"; // Calendar
 
 export default function TabBar() {
   const icons = [ic1, ic2, ic3, ic4, ic5];
-  const openAiWindow = () => {
-    initScene("aiScene", (defaultConfig) => {
-      return {
-        ...defaultConfig,
-        defaultSize: { width: 900, height: 700 },
-      };
+  const openWindow = (name: string, path: string) => {
+    initScene(name, (defaultConfig) => {
+      return { ...defaultConfig, defaultSize: { width: 900, height: 700 } };
     });
-    const url = new URL("/ai", window.location.origin).toString();
-    window.open(url, "aiScene");
+    const url = new URL(path, window.location.origin).toString();
+    window.open(url, name);
   };
-  const openTodoWindow = () => {
-    initScene("todoScene", (defaultConfig) => {
-      return {
-        ...defaultConfig,
-        defaultSize: { width: 900, height: 700 },
-      };
-    });
-    const url = new URL("/todo", window.location.origin).toString();
-    window.open(url, "todoScene");
-  };
+  const handlers = [
+    () => openWindow("homeScene", "/"),
+    () => openWindow("docScene", "/doc"),
+    () => openWindow("aiScene", "/ai"),
+    () => openWindow("todoScene", "/todo"),
+    () => openWindow("calendarScene", "/calendar"),
+  ];
   return (
     <div enable-xr 
     style={{"--xr-back": 50, "--xr-background-material": "regular"}}
@@ -43,7 +37,7 @@ export default function TabBar() {
               : "hover:bg-white/10",
           ].join(" ")}
           aria-label={`tab-${idx + 1}`}
-          onClick={idx === 0 ? openAiWindow : idx === 1 ? openTodoWindow : undefined}
+          onClick={handlers[idx]}
         >
           <img
             src={src}
