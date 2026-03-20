@@ -49,7 +49,10 @@ This app demonstrates a Notion-like experience with a spatial, multi-window UI p
 - Install dependencies: `npm install`
 - Start dev server: `npm run dev`
   - Alternative: `npm run dev:avp` sets `XR_ENV=avp` for spatial mode defaults.
-- Open windows via the TabBar on the home route, or navigate directly to page routes.
+
+- Open the Pico emulator.
+- Open the Pico Browser and visit 10.0.2.2:5173.
+- Click "Open as App", or "Install" when prompted.
 
 ## Build & Preview
 - Build: `npm run build`
