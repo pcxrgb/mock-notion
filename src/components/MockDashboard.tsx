@@ -1,10 +1,10 @@
 import React from "react";
 
-import iconRecent from "../../.figma/image/mmwjzff6-ulyzgkr.svg";
-import docIconA from "../../.figma/image/mmwjzff6-xznl2ku.svg";
-import docIconB from "../../.figma/image/mmwjzff6-of9ke1y.svg";
-import avatar from "../../.figma/image/mmwjzff8-gti23jr.png";
-import iconUpcoming from "../../.figma/image/mmwjzff6-3mu8y16.svg";
+import iconRecent from "../assets/icons/icon-recent.svg";
+import docIconA from "../assets/icons/icon-doc-a.svg";
+import docIconB from "../assets/icons/icon-doc-b.svg";
+import avatar from "../assets/images/avatar-default.png";
+import iconUpcoming from "../assets/icons/icon-upcoming.svg";
 
 const documents = [
   { title: "Q3 Product Development …", icon: docIconA },

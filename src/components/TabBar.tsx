@@ -1,11 +1,11 @@
 import React from "react";
 import { initScene } from "@webspatial/react-sdk";
 
-import ic1 from "../../.figma/image/screenshot_993_3474.png"; // Home
-import ic2 from "../../.figma/image/screenshot_993_3477.png"; // Document View
-import ic3 from "../../.figma/image/screenshot_993_3483.png"; // AI Chat
-import ic4 from "../../.figma/image/screenshot_993_3489.png"; // TODO
-import ic5 from "../../.figma/image/screenshot_993_3494.png"; // Calendar
+import ic1 from "../assets/icons/icon-home.png"; // Home
+import ic2 from "../assets/icons/icon-document.png"; // Document View
+import ic3 from "../assets/icons/icon-ai-chat.png"; // AI Chat
+import ic4 from "../assets/icons/icon-todo.png"; // TODO
+import ic5 from "../assets/icons/icon-calendar.png"; // Calendar
 
 export default function TabBar() {
   const icons = [ic1, ic2, ic3, ic4, ic5];

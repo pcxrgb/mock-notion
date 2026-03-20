@@ -2,6 +2,8 @@ import TabBar from "./components/TabBar";
 import MockDashboard from "./components/MockDashboard";
 import TodoPage from "./components/TodoPage";
 import AiPage from "./components/AiPage";
+import DocPage from "./components/DocPage";
+import CalendarPage from "./components/CalendarPage";
 
 import { Routes, Route, useLocation } from "react-router-dom";
 
