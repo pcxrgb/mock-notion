@@ -2,6 +2,7 @@ import TabBar from "./components/TabBar";
 import MockDashboard from "./components/MockDashboard";
 import TodoPage from "./components/TodoPage";
 import AiPage from "./components/AiPage";
+
 import { Routes, Route, useLocation } from "react-router-dom";
 
 function App() {
@@ -14,6 +15,8 @@ function App() {
             <Route path="/" element={<MockDashboard />} />
             <Route path="/todo" element={<TodoPage />} />
             <Route path="/ai" element={<AiPage />} />
+            <Route path="/doc" element={<DocPage />} />
+            <Route path="/calendar" element={<CalendarPage />} />
           </Routes>
         </div>
       </div>
