@@ -31,6 +31,7 @@ export async function GET() {
         p.properties?.Name?.title?.[0]?.plain_text ??
         "Untitled",
       lastEdited: p.last_edited_time as string,
+      avatarUrl: (p.last_edited_by as any)?.avatar_url ?? undefined,
     }));
   return NextResponse.json(recent);
 }
