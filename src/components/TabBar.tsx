@@ -1,5 +1,7 @@
+'use client';
 import React from "react";
 import { initScene } from "@webspatial/react-sdk";
+import Image from "next/image";
 
 import ic1 from "../assets/icons/icon-home.png"; // Home
 import ic2 from "../assets/icons/icon-document.png"; // Document View
@@ -24,7 +26,7 @@ export default function TabBar() {
     () => openWindow("calendarScene", "/calendar"),
   ];
   return (
-    <div enable-xr 
+    <div data-enable-xr 
     style={{"--xr-back": "50", "--xr-background-material": "regular"} as React.CSSProperties}
     className="inline-flex flex-col items-start rounded-[34px] p-3 w-[68px] gap-3 shadow border border-black/10">
       {icons.map((src, idx) => (
@@ -39,7 +41,7 @@ export default function TabBar() {
           aria-label={`tab-${idx + 1}`}
           onClick={handlers[idx]}
         >
-          <img
+          <Image
             src={src}
             alt=""
             className="w-6 h-6 object-contain"

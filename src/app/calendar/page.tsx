@@ -1,12 +1,11 @@
+'use client';
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
 export default function CalendarPage() {
   const now = new Date();
   const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
   const monthEnd = new Date(now.getFullYear(), now.getMonth() + 1, 0);
-  const monthName = monthStart.toLocaleString(undefined, {
-    month: "long",
-  });
+  const monthName = monthStart.toLocaleString(undefined, { month: "long" });
   const yearNum = monthStart.getFullYear();
 
   const monthDays = useMemo(() => {
@@ -17,7 +16,7 @@ export default function CalendarPage() {
     return days;
   }, [now, monthEnd]);
 
-  const firstWeekday = monthStart.getDay(); // 0=Sun
+  const firstWeekday = monthStart.getDay();
   const weekdayLabels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   const calendars = [
@@ -44,16 +43,13 @@ export default function CalendarPage() {
     ro.observe(gridRef.current);
     return () => ro.disconnect();
   }, []);
-  const hourHeight = Math.max(
-    32,
-    gridHeight ? gridHeight / (endHour - startHour) : 42
-  );
+  const hourHeight = Math.max(32, gridHeight ? gridHeight / (endHour - startHour) : 42);
   const hours = Array.from({ length: endHour - startHour + 1 }, (_, i) => startHour + i);
 
   const weekDays = useMemo(() => {
     const base = new Date(now);
-    const day = base.getDay(); // 0 Sun
-    const mondayOffset = ((day + 6) % 7) * -1; // moves to Monday
+    const day = base.getDay();
+    const mondayOffset = ((day + 6) % 7) * -1;
     const monday = new Date(base);
     monday.setDate(base.getDate() + mondayOffset);
     return Array.from({ length: 5 }, (_, i) => {
@@ -67,9 +63,9 @@ export default function CalendarPage() {
     title: string;
     who: string;
     calendarId: string;
-    dayIndex: number; // 0..4 (Mon..Fri)
-    start: string; // "HH:MM"
-    end: string; // "HH:MM"
+    dayIndex: number;
+    start: string;
+    end: string;
   };
 
   const demoEvents: DemoEvent[] = [
@@ -95,8 +91,8 @@ export default function CalendarPage() {
 
   return (
     <div
-      enable-xr
-      style={{ "--xr-background-material": "regular" } as React.CSSProperties}
+      data-enable-xr
+      style={{ ["--xr-background-material" as any]: "regular" }}
       className="w-screen h-screen p-12 flex gap-6 shadow border border-white/10"
     >
       <div className="w-1/5 min-w-[240px] h-full rounded-2xl px-5 py-6 flex flex-col">
@@ -134,7 +130,6 @@ export default function CalendarPage() {
             })}
           </div>
         </div>
-
         <div className="mt-6">
           <h3 className="text-sm font-semibold text-white/80">Calendars</h3>
           <ul className="mt-3 space-y-2">
@@ -144,9 +139,7 @@ export default function CalendarPage() {
                   id={`cal-${c.id}`}
                   type="checkbox"
                   checked={!!active[c.id]}
-                  onChange={() =>
-                    setActive((prev) => ({ ...prev, [c.id]: !prev[c.id] }))
-                  }
+                  onChange={() => setActive((prev) => ({ ...prev, [c.id]: !prev[c.id] }))}
                   className="appearance-none w-4 h-4 rounded border border-white/50 checked:bg-white/80"
                 />
                 <span className={["inline-block w-2 h-2 rounded", c.color].join(" ")} />
@@ -157,10 +150,8 @@ export default function CalendarPage() {
             ))}
           </ul>
         </div>
-
         <div className="mt-4 flex-1 min-h-0 overflow-y-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" />
       </div>
-
       <div className="flex-1 h-full rounded-2xl bg-white text-neutral-900 overflow-auto px-6 py-6">
         <div className="max-w-[1100px] mx-auto h-full flex flex-col">
           <div className="grid grid-cols-[80px_repeat(5,1fr)] items-end">
@@ -168,16 +159,11 @@ export default function CalendarPage() {
             {weekDays.map((d, i) => (
               <div key={i} className="text-center text-sm font-semibold text-neutral-700">
                 {d.toLocaleString(undefined, { weekday: "short" })}{" "}
-                <span className="text-neutral-500">
-                  {d.getDate()}
-                </span>
+                <span className="text-neutral-500">{d.getDate()}</span>
               </div>
             ))}
           </div>
-          <div
-            ref={gridRef}
-            className="mt-2 grid grid-cols-[80px_repeat(5,1fr)] flex-1 min-h-0 relative"
-          >
+          <div ref={gridRef} className="mt-2 grid grid-cols-[80px_repeat(5,1fr)] flex-1 min-h-0 relative">
             <div className="relative">
               {hours.map((h) => (
                 <div
@@ -191,7 +177,6 @@ export default function CalendarPage() {
             </div>
             {weekDays.map((_, dayIdx) => (
               <div key={dayIdx} className="relative border-l border-neutral-200">
-                {/* hour grid lines */}
                 {hours.map((h) => (
                   <div
                     key={h}
@@ -199,13 +184,11 @@ export default function CalendarPage() {
                     style={{ top: `${(h - startHour) * hourHeight}px` }}
                   />
                 ))}
-                {/* events */}
                 {demoEvents
                   .filter((e) => e.dayIndex === dayIdx && active[e.calendarId])
                   .map((e, idx) => {
                     const { top, height } = getPos(e.start, e.end);
-                    const color =
-                      calendars.find((c) => c.id === e.calendarId)?.color ?? "bg-neutral-200";
+                    const color = calendars.find((c) => c.id === e.calendarId)?.color ?? "bg-neutral-200";
                     return (
                       <div
                         key={idx}
@@ -218,7 +201,9 @@ export default function CalendarPage() {
                       >
                         <div className="font-semibold">{e.title}</div>
                         <div className="text-[11px] opacity-80">{e.who}</div>
-                        <div className="text-[11px] opacity-80">{e.start}–{e.end}</div>
+                        <div className="text-[11px] opacity-80">
+                          {e.start}–{e.end}
+                        </div>
                       </div>
                     );
                   })}
