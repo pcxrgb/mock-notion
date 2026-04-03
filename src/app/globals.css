@@ -2,7 +2,7 @@
 
 html.is-spatial {
     background-color: transparent;
-    --xr-background-material: transparent;
+    --xr-background-material: regular;
 }
 
 .xr-transparent {

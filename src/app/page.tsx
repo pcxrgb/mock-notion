@@ -1,4 +1,5 @@
 'use client';
+
 import React, { useEffect } from "react";
 import TabBar from "../components/TabBar";
 import { useDashboardStore } from "../state/dashboardStore";
@@ -15,9 +16,8 @@ export default function HomePage() {
       <div className="absolute inset-0 overflow-auto">
         <div className="h-full w-full flex items-center justify-center">
           <div 
-            data-enable-xr="true"
-            style={{["--xr-background-material" as any]: "regular"}}
-            className="w-screen h-screen p-12 flex flex-col items-center shadow border border-white/10 overflow-hidden"
+            enable-xr="true"
+            className="xr-regular w-screen h-screen p-12 flex flex-col items-center shadow border border-white/10 overflow-hidden"
           >
             <h1 className="text-5xl font-bold text-white">Dashboard</h1>
             <div className="relative mt-6 w-full max-w-[1200px] flex-1 min-h-0 flex flex-col gap-8">

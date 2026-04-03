@@ -23,30 +23,21 @@ export const useDashboardStore = create<DashboardState>((set) => ({
   loading: false,
   load: async () => {
     set({ loading: true });
-    const recent: RecentPage[] = Array.from({ length: 6 }).map((_, i) => ({
-      id: `demo-${i + 1}`,
-      title: i % 2 === 0 ? "Project Notes" : "Research Log",
-      lastEdited: new Date(Date.now() - i * 8.64e7).toISOString(),
-    }));
-    const now = new Date();
-    const events: CalendarEvent[] = Array.from({ length: 8 }).map((_, i) => {
-      const day = new Date(now);
-      day.setDate(now.getDate() + i);
-      const startHour = 14 + (i % 3);
-      const endHour = startHour + 1;
-      const start = new Date(day);
-      start.setHours(startHour, (i % 2) * 15, 0, 0);
-      const end = new Date(day);
-      end.setHours(endHour, (i % 2) * 15, 0, 0);
-      const calendarId: CalendarId = i % 3 === 0 ? "work" : i % 3 === 1 ? "personal" : "holidays";
-      return {
-        name: i % 2 === 0 ? "Research" : "Meeting",
-        calendarId,
-        startISO: start.toISOString(),
-        endISO: end.toISOString(),
-      };
-    });
-    set({ recent, events, loading: false });
+    try {
+      const [rRes, eRes] = await Promise.all([
+        fetch("/api/notion/recent", { cache: "no-store" }),
+        fetch("/api/notion/events", { cache: "no-store" }),
+      ]);
+      const r = (await rRes.json()) as unknown;
+      const e = (await eRes.json()) as unknown;
+      const recent = Array.isArray(r) ? (r as RecentPage[]) : [];
+      const events = Array.isArray(e) ? (e as CalendarEvent[]) : [];
+      set({ recent, events, loading: false });
+      return;
+    } catch {
+      set({ recent: [], events: [], loading: false });
+      return;
+    }
   },
   reset: () => set({ recent: [], events: [] }),
 }));

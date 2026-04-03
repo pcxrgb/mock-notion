@@ -33,3 +33,12 @@ This app demonstrates a Notion-like experience with a spatial, multi-window UI p
 - Images are imported from `src/assets` and bundled by Next.js.
 - PWA-specific Vite plugins were removed; consider `next-pwa` if PWA is required.
 - React Router was removed in favor of Next.js App Router.
+
+## Notion Integration (Optional)
+- Add credentials in `.env.local`:
+  - `NOTION_TOKEN` – Internal Integration secret (server-only)
+  - `NOTION_EVENTS_DB_ID` – Notion database id for events (optional)
+- API routes:
+  - Recent pages: `app/api/notion/recent/route.ts`
+  - Events: `app/api/notion/events/route.ts`
+- The dashboard store fetches from these endpoints and falls back to demo data on error.

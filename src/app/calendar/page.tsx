@@ -91,7 +91,7 @@ export default function CalendarPage() {
 
   return (
     <div
-      data-enable-xr
+      enable-xr="true"
       style={{ ["--xr-background-material" as any]: "regular" }}
       className="w-screen h-screen p-12 flex gap-6 shadow border border-white/10"
     >

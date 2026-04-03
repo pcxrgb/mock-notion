@@ -17,7 +17,7 @@ export default function TodoPage() {
 
   return (
     <div
-      data-enable-xr
+      enable-xr="true"
       style={{ ["--xr-background-material" as any]: "regular" }}
       className="w-screen h-screen p-12 flex flex-col items-start shadow border border-white/10 overflow-hidden"
     >
