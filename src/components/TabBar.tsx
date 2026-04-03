@@ -1,4 +1,5 @@
 'use client';
+
 import React from "react";
 import { initScene } from "@webspatial/react-sdk";
 import Image from "next/image";

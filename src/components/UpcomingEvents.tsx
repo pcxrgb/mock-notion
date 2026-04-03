@@ -1,4 +1,5 @@
 'use client';
+
 import React from "react";
 import iconUpcoming from "../assets/icons/icon-upcoming.svg";
 import type { CalendarEvent, CalendarId } from "../state/dashboardStore";

@@ -1,4 +1,5 @@
 'use client';
+
 import React from "react";
 import iconRecent from "../assets/icons/icon-recent.svg";
 import avatar from "../assets/images/avatar-default.png";
