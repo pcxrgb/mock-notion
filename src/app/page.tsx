@@ -82,10 +82,10 @@ function timeRange(startISO: string, endISO: string) {
 
 function UpcomingEvents({ events, loading }: UpcomingEventsProps) {
   return (
-    <section className="z-[1] flex-1 min-h-0 flex flex-col">
+    <section className="flex-1 min-h-0 flex flex-col">
       <div className="flex items-center gap-2 text-neutral-300">
         <img src={(iconUpcoming as any).src ?? (iconUpcoming as any)} alt="" className="w-5 h-5" />
-        <p className="text-[17px]">Upcoming Event</p>
+        <p className="text-[17px]">Upcoming Events</p>
       </div>
       <div className="mt-4 w-full rounded-2xl bg-white/10 backdrop-blur px-5 pt-6 pb-4 flex-1 min-h-0 overflow-y-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         <div className="space-y-5">
