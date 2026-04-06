@@ -1,13 +1,15 @@
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
 import { getNotionClient } from "../../../../lib/notion";
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 export async function GET() {
-  const token = process.env.NOTION_TOKEN;
-  if (!token) return NextResponse.json([]);
+  const cookieStore = await cookies();
+  const token = cookieStore.get("notion_access_token")?.value;
+  if (!token) return NextResponse.json([], { status: 401 });
 
-  const notion = getNotionClient();
+  const notion = getNotionClient(token);
   try {
     const data: any = await notion.search({
       sort: { direction: "descending", timestamp: "last_edited_time" },
@@ -47,12 +49,25 @@ export async function GET() {
           id: p.id as string,
           title,
           lastEdited: p.last_edited_time as string,
-          avatarUrl: (p.last_edited_by as any)?.avatar_url ?? undefined,
         };
       })
       .filter(Boolean)
       .slice(0, 6) as any[];
-    return NextResponse.json(recent);
+    const recentWithOwners = await Promise.all(
+      recent.map(async (r: any) => {
+        try {
+          const full: any = await notion.pages.retrieve({ page_id: r.id });
+          const avatarUrl =
+            full?.created_by?.avatar_url ??
+            full?.last_edited_by?.avatar_url ??
+            undefined;
+          return { ...r, avatarUrl };
+        } catch {
+          return r;
+        }
+      })
+    );
+    return NextResponse.json(recentWithOwners);
   } catch {
     return NextResponse.json([]);
   }

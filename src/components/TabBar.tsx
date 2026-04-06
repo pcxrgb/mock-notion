@@ -27,9 +27,10 @@ export default function TabBar() {
     () => openWindow("calendarScene", "/calendar"),
   ];
   return (
-    <div enable-xr="true"
+    <div 
+    enable-xr="true"
     style={{"--xr-back": "50", "--xr-background-material": "regular"} as React.CSSProperties}
-    className="bg-slate-50 inline-flex flex-col items-start rounded-[34px] p-3 w-[68px] gap-3 shadow border border-black/10 -z-10">
+    className="inline-flex flex-col items-start rounded-[34px] p-3 w-[68px] gap-3 shadow border border-black/10 -z-10">
       {icons.map((src, idx) => (
         <button
           key={idx}
