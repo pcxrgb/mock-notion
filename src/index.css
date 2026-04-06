@@ -29,3 +29,12 @@ html.is-spatial {
 html.is-spatial .tabbar-overlay {
     --xr-back: 50;
 }
+
+/* FullCalendar day cells: white background behind dates only */
+.fc .fc-daygrid-body .fc-daygrid-day {
+    background-color: #ffffff;
+    color: #000000;
+}
+.fc .fc-daygrid-day-top .fc-daygrid-day-number {
+    color: #000000;
+}

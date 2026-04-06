@@ -15,6 +15,22 @@ const documents = [
 ];
 
 export default function MockDashboard() {
+  const [showSpinner, setShowSpinner] = React.useState(true);
+  const [showGreeting, setShowGreeting] = React.useState(false);
+  const [showRecent, setShowRecent] = React.useState(false);
+  const [showEvents, setShowEvents] = React.useState(false);
+  React.useEffect(() => {
+    const t1 = setTimeout(() => setShowSpinner(false), 1000);
+    const t2 = setTimeout(() => setShowGreeting(true), 1100);
+    const t3 = setTimeout(() => setShowRecent(true), 1600);
+    const t4 = setTimeout(() => setShowEvents(true), 2100);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+      clearTimeout(t4);
+    };
+  }, []);
   const colorClasses = [
     "bg-cyan-400",
     "bg-emerald-400",
@@ -60,10 +76,10 @@ export default function MockDashboard() {
     enable-xr
     style={{"--xr-background-material": "regular"}}
     className="w-screen h-screen p-12 flex flex-col items-center shadow border border-white/10 overflow-hidden">
-      <h1 className="text-5xl font-bold text-white">Good afternoon</h1>
+      <h1 className={`text-5xl font-bold text-white transition-all duration-700 ${showGreeting ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}`}>Good afternoon</h1>
 
       <div className="relative mt-6 w-full max-w-[1200px] flex-1 min-h-0 flex flex-col gap-8">
-        <section>
+        <section className={`transition-all duration-700 ${showRecent ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}`}>
           <div className="flex items-center gap-2 text-neutral-300">
             <img src={iconRecent} alt="" className="w-5 h-5" />
             <p className="text-[17px]">Recently visited</p>
@@ -96,7 +112,7 @@ export default function MockDashboard() {
           </div>
         </section>
 
-        <section className="z-[1] flex-1 min-h-0 flex flex-col">
+        <section className={`flex-1 min-h-0 flex flex-col transition-all duration-700 ${showEvents ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}`}>
           <div className="flex items-center gap-2 text-neutral-300">
             <img src={iconUpcoming} alt="" className="w-5 h-5" />
             <p className="text-[17px]">Upcoming Event</p>
@@ -126,6 +142,11 @@ export default function MockDashboard() {
           </div>
         </section>
       </div>
+      {showSpinner && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="w-16 h-16 rounded-full border-4 border-white/30 border-t-white/90 animate-spin" />
+        </div>
+      )}
     </div>
   );
 }
