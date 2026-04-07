@@ -1,17 +1,29 @@
 import React from "react";
 
 import iconRecent from "../assets/icons/icon-recent.svg";
-import docIconA from "../assets/icons/icon-doc-a.svg";
-import docIconB from "../assets/icons/icon-doc-b.svg";
+import { FileText, ListTodo, Database as DbIcon } from "lucide-react";
 import avatar from "../assets/images/avatar-default.png";
 import iconUpcoming from "../assets/icons/icon-upcoming.svg";
 
-const documents = [
-  { title: "Q3 Product Development …", icon: docIconA },
-  { title: "Feature Specification …", icon: docIconA },
-  { title: "User Flow & Interaction …", icon: docIconB },
-  { title: "Product Roadmap Q1 …", icon: docIconB },
-  { title: "UI/UX Design Specification", icon: docIconB },
+type DocType = "Document" | "List" | "Database";
+type RecentDoc = {
+  title: string;
+  type: DocType;
+  lastAccessed: Date;
+};
+
+const daysAgo = (n: number) => {
+  const d = new Date();
+  d.setDate(d.getDate() - n);
+  return d;
+};
+
+const documents: RecentDoc[] = [
+  { title: "Q3 Product Development …", type: "Document", lastAccessed: daysAgo(0) },
+  { title: "Feature Specification …", type: "Document", lastAccessed: daysAgo(1) },
+  { title: "Product Roadmap Q1 …", type: "Document", lastAccessed: daysAgo(2) },
+  { title: "User Flow & Interaction …", type: "List", lastAccessed: daysAgo(3) },
+  { title: "Company Database Overview", type: "Database", lastAccessed: daysAgo(12) },
 ];
 
 export default function DashboardPage() {
@@ -46,6 +58,16 @@ export default function DashboardPage() {
     const options: Intl.DateTimeFormatOptions = { weekday: "long", month: "long", day: "numeric" };
     const label = date.toLocaleDateString(undefined, options);
     return idx === 0 ? `${label}` : label;
+  };
+
+  const formatDocDate = (date: Date) => {
+    return date.toLocaleDateString(undefined, { month: "short", day: "numeric" });
+  };
+
+  const getDocIcon = (type: DocType) => {
+    if (type === "Document") return <FileText className="w-8 h-8 text-neutral-200" aria-label="Document" />;
+    if (type === "List") return <ListTodo className="w-8 h-8 text-neutral-200" aria-label="List" />;
+    return <DbIcon className="w-8 h-8 text-neutral-200" aria-label="Database" />;
   };
 
   const events = Array.from({ length: 8 }).map((_, i) => {
@@ -84,31 +106,24 @@ export default function DashboardPage() {
     style={{"--xr-background-material": "regular"}}
     className="w-screen h-screen p-12 flex flex-col items-center shadow border border-white/10 overflow-hidden">
       <h1 className={`text-5xl font-bold text-white transition-all duration-700 ${showGreeting ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}`}>{getGreeting()}</h1>
-
       <div className="relative mt-6 w-full max-w-[1200px] flex-1 min-h-0 flex flex-col gap-8">
         <section className={`transition-all duration-700 ${showRecent ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}`}>
           <div className="flex items-center gap-2 text-neutral-300">
-            <img src={iconRecent} alt="" className="w-5 h-5" />
+            <img src={iconRecent} alt=""/>
             <p className="text-[17px]">Recently visited</p>
           </div>
 
           <div className="mt-4 w-full overflow-x-auto pr-3 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             <div className="flex items-stretch gap-3 w-max">
-              {documents.map((d, i) => (
-                <div key={i} className="shrink-0 rounded-2xl bg-white/10 backdrop-blur p-4 flex flex-col">
-                  <img src={d.icon} alt="" />
-                  <p className="my-4 ml-1 font-semibold text-white/95 leading-5 w-[140px]">
+              {documents.slice(0, 6).map((d, i) => (
+                <div key={i} className="bg-white/10 backdrop-blur shrink-0 rounded-2xl p-4 flex flex-col hover:cursor-pointer">
+                  <div className="ml-1">{getDocIcon(d.type)}</div>
+                  <p className="my-4 ml-1 font-semibold text-neutral-100 leading-5 w-[140px] hover:text-neutral-50">
                     {d.title}
                   </p>
                   <div className="mt-auto flex items-center justify-between pr-1 pl-1">
-                    <img
-                      src={avatar}
-                      alt=""
-                      className="w-6 h-6 rounded-full object-cover"
-                    />
-                    <p className="text-[17px] font-semibold text-neutral-400 w-[106px] text-right">
-                      Feb 2
-                    </p>
+                    <img src={avatar} alt="" className="w-6 h-6 rounded-full object-cover"/>
+                    <p className="text-[17px] font-semibold text-neutral-400 w-[106px] text-right">{formatDocDate(d.lastAccessed)}</p>
                   </div>
                 </div>
               ))}
@@ -119,7 +134,7 @@ export default function DashboardPage() {
         <section className={`flex-1 min-h-0 flex flex-col transition-all duration-700 ${showEvents ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}`}>
           <div className="flex items-center gap-2 text-neutral-300">
             <img src={iconUpcoming} alt="" className="w-5 h-5" />
-            <p className="text-[17px]">Upcoming Event</p>
+            <p className="text-[17px]">Upcoming Events</p>
           </div>
 
           <div className="mt-4 w-full rounded-2xl bg-white/10 backdrop-blur px-5 pt-6 pb-4 flex-1 min-h-0 overflow-y-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
