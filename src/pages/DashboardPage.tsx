@@ -14,7 +14,7 @@ const documents = [
   { title: "UI/UX Design Specification", icon: docIconB },
 ];
 
-export default function Dashboard() {
+export default function DashboardPage() {
   const [showSpinner, setShowSpinner] = React.useState(true);
   const [showGreeting, setShowGreeting] = React.useState(false);
   const [showRecent, setShowRecent] = React.useState(false);
@@ -71,12 +71,19 @@ export default function Dashboard() {
     };
   });
 
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return "Good morning";
+    if (hour < 18) return "Good afternoon";
+    return "Good evening";
+  };
+
   return (
     <div 
     enable-xr
     style={{"--xr-background-material": "regular"}}
     className="w-screen h-screen p-12 flex flex-col items-center shadow border border-white/10 overflow-hidden">
-      <h1 className={`text-5xl font-bold text-white transition-all duration-700 ${showGreeting ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}`}>Good afternoon</h1>
+      <h1 className={`text-5xl font-bold text-white transition-all duration-700 ${showGreeting ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}`}>{getGreeting()}</h1>
 
       <div className="relative mt-6 w-full max-w-[1200px] flex-1 min-h-0 flex flex-col gap-8">
         <section className={`transition-all duration-700 ${showRecent ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}`}>
@@ -88,12 +95,9 @@ export default function Dashboard() {
           <div className="mt-4 w-full overflow-x-auto pr-3 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             <div className="flex items-stretch gap-3 w-max">
               {documents.map((d, i) => (
-                <div
-                  key={i}
-                  className="shrink-0 rounded-2xl bg-white/10 backdrop-blur p-4 w-[168px] h-[205px] flex flex-col"
-                >
-                  <img src={d.icon} alt="" className="w-[46px] h-[46px]" />
-                  <p className="mt-4 ml-1 text-[17px] font-semibold text-white/95 leading-5 w-[140px]">
+                <div key={i} className="shrink-0 rounded-2xl bg-white/10 backdrop-blur p-4 flex flex-col">
+                  <img src={d.icon} alt="" />
+                  <p className="my-4 ml-1 font-semibold text-white/95 leading-5 w-[140px]">
                     {d.title}
                   </p>
                   <div className="mt-auto flex items-center justify-between pr-1 pl-1">

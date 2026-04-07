@@ -1,5 +1,5 @@
 import TabBar from "./components/TabBar";
-import Dashboard from "./pages/Dashboard";
+import DashboardPage from "./pages/DashboardPage";
 import TodoPage from "./pages/TodoPage";
 import AiPage from "./pages/AiPage";
 import DocPage from "./pages/DocPage";
@@ -14,7 +14,7 @@ function App() {
       <div className="absolute inset-0 overflow-auto">
         <div className="h-full w-full flex items-center justify-center">
           <Routes>
-            <Route path="/" element={<Dashboard />} />
+            <Route path="/" element={<DashboardPage />} />
             <Route path="/todo" element={<TodoPage />} />
             <Route path="/ai" element={<AiPage />} />
             <Route path="/doc" element={<DocPage />} />
