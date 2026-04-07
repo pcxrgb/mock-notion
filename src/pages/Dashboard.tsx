@@ -14,7 +14,7 @@ const documents = [
   { title: "UI/UX Design Specification", icon: docIconB },
 ];
 
-export default function MockDashboard() {
+export default function Dashboard() {
   const [showSpinner, setShowSpinner] = React.useState(true);
   const [showGreeting, setShowGreeting] = React.useState(false);
   const [showRecent, setShowRecent] = React.useState(false);
