@@ -1,40 +1,40 @@
 @import "tailwindcss";
 
 html.is-spatial {
-    background-color: transparent;
-    --xr-background-material: transparent;
+  background-color: transparent;
+  --xr-background-material: transparent;
 }
 
 .xr-transparent {
-    --xr-background-material: transparent;
+  --xr-background-material: transparent;
 }
 
 .xr-translucent {
-    --xr-background-material: translucent;
+  --xr-background-material: translucent;
 }
 
 .xr-regular {
-    --xr-background-material: regular;
+  --xr-background-material: regular;
 }
 
 .xr-thin {
-    --xr-background-material: thin;
+  --xr-background-material: thin;
 }
 
 .xr-thick {
-    --xr-background-material: thick;
+  --xr-background-material: thick;
 }
 
 /* Elevate the floating TabBar in spatial mode so it sits in front of the page */
 html.is-spatial .tabbar-overlay {
-    --xr-back: 50;
+  --xr-back: 50;
 }
 
 /* FullCalendar day cells: white background behind dates only */
 .fc .fc-daygrid-body .fc-daygrid-day {
-    background-color: #ffffff;
-    color: #000000;
+  background-color: #ffffff;
+  color: #000000;
 }
 .fc .fc-daygrid-day-top .fc-daygrid-day-number {
-    color: #000000;
+  color: #000000;
 }
