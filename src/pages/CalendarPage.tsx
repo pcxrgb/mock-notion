@@ -11,7 +11,7 @@ export default function CalendarPage() {
           "--xr-background-material": "regular",
         } as React.CSSProperties
       }
-      className="w-screen h-screen p-4 text-white font-bold rounded"
+      className="h-screen w-screen rounded p-4 font-bold text-white"
     >
       <style>
         {`

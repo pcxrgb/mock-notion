@@ -2,7 +2,8 @@ import React from "react";
 
 import iconRecent from "../assets/icons/icon-recent.svg";
 import { FileText, ListTodo, Database as DbIcon } from "lucide-react";
-import avatar from "../assets/images/avatar-default.png";
+import avatar1 from "../assets/images/avatar-example-1.png";
+import avatar2 from "../assets/images/avatar-example-2.png";
 import iconUpcoming from "../assets/icons/icon-upcoming.svg";
 
 type DocType = "Document" | "List" | "Database";
@@ -122,7 +123,7 @@ export default function DashboardPage() {
                     {d.title}
                   </p>
                   <div className="mt-auto flex items-center justify-between pr-1 pl-1">
-                    <img src={avatar} alt="" className="w-6 h-6 rounded-full object-cover"/>
+                    <img src={i % 2 === 0 ? avatar1 : avatar2} alt="" className="w-6 h-6 rounded-full object-cover"/>
                     <p className="text-[17px] font-semibold text-neutral-400 w-[106px] text-right">{formatDocDate(d.lastAccessed)}</p>
                   </div>
                 </div>

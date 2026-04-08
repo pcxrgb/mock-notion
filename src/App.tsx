@@ -10,9 +10,9 @@ import { Routes, Route, useLocation } from "react-router-dom";
 function App() {
   const location = useLocation();
   return (
-    <div className="h-screen w-screen relative overflow-hidden">
+    <div className="relative h-screen w-screen overflow-hidden">
       <div className="absolute inset-0 overflow-auto">
-        <div className="h-full w-full flex items-center justify-center">
+        <div className="flex h-full w-full items-center justify-center">
           <Routes>
             <Route path="/" element={<DashboardPage />} />
             <Route path="/todo" element={<TodoPage />} />

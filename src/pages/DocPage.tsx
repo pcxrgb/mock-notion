@@ -5,11 +5,11 @@ export default function DocPage() {
     <div
       enable-xr
       style={{ "--xr-background-material": "regular" } as React.CSSProperties}
-      className="w-screen h-screen p-12 flex gap-6 shadow border border-white/10 overflow-hidden"
+      className="flex h-screen w-screen gap-6 overflow-hidden border border-white/10 p-12 shadow"
     >
-      <div className="w-1/5 min-w-[240px] h-full rounded-2xl px-5 py-6 flex flex-col">
+      <div className="flex h-full w-1/5 min-w-[240px] flex-col rounded-2xl px-5 py-6">
         <h2 className="text-lg font-semibold text-white/90">Documents</h2>
-        <div className="mt-4 flex-1 min-h-0 overflow-y-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="mt-4 min-h-0 flex-1 overflow-y-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           <ul className="space-y-2">
             <li className="text-[15px] text-white/90">Product Spec</li>
             <li className="text-[15px] text-white/90">Quarterly Plan</li>
@@ -19,19 +19,22 @@ export default function DocPage() {
         </div>
       </div>
 
-      <div className="flex-1 h-full rounded-2xl bg-white text-neutral-900 overflow-auto px-10 py-8">
-        <div className="max-w-[900px] mx-auto">
-          <h1 className="text-3xl font-bold">Project Alpha — Working Document</h1>
+      <div className="h-full flex-1 overflow-auto rounded-2xl bg-white px-10 py-8 text-neutral-900">
+        <div className="mx-auto max-w-[900px]">
+          <h1 className="text-3xl font-bold">
+            Project Alpha — Working Document
+          </h1>
           <p className="mt-4 text-[16px] leading-7">
             This document captures the current state of work, decisions, and
-            action items related to Project Alpha. It is intended to be a
-            living document that reflects ongoing progress and aligns the team.
+            action items related to Project Alpha. It is intended to be a living
+            document that reflects ongoing progress and aligns the team.
           </p>
           <h2 className="mt-8 text-2xl font-semibold">Goals</h2>
           <p className="mt-3 text-[16px] leading-7">
-            - Deliver a delightful user experience across core workflows.<br />
-            - Ensure performance and reliability under production traffic.<br />
-            - Maintain a flexible architecture to support rapid iteration.
+            - Deliver a delightful user experience across core workflows.
+            <br />
+            - Ensure performance and reliability under production traffic.
+            <br />- Maintain a flexible architecture to support rapid iteration.
           </p>
           <h2 className="mt-8 text-2xl font-semibold">Notes</h2>
           <p className="mt-3 text-[16px] leading-7">
@@ -42,8 +45,10 @@ export default function DocPage() {
           </p>
           <h2 className="mt-8 text-2xl font-semibold">Tasks</h2>
           <p className="mt-3 text-[16px] leading-7">
-            1. Finalize document layout and typography.<br />
-            2. Add autosave and version history.<br />
+            1. Finalize document layout and typography.
+            <br />
+            2. Add autosave and version history.
+            <br />
             3. Integrate comments and mentions.
           </p>
           <p className="mt-8 text-[14px] text-neutral-600">
