@@ -30,7 +30,8 @@ export default function DocPage() {
                   <button
                     type="button"
                     onClick={() => setCurrentIdx(i)}
-                    className={`w-full text-left text-[15px] rounded-lg px-3 py-2 transition-colors ${
+                    title={d.title}
+                    className={`w-full text-left text-[15px] rounded-lg px-3 py-2 transition-colors truncate ${
                       selected ? "bg-white/10 text-white" : "text-white/90 hover:bg-white/10"
                     }`}
                   >
