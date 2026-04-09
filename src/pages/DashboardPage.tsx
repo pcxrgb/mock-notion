@@ -7,27 +7,7 @@ import { FileText, ListTodo, Database as DbIcon } from "lucide-react";
 import avatar1 from "../assets/images/avatar-example-1.png";
 import avatar2 from "../assets/images/avatar-example-2.png";
 import iconUpcoming from "../assets/icons/icon-upcoming.svg";
-
-type DocType = "Document" | "List" | "Database";
-type RecentDoc = {
-  title: string;
-  type: DocType;
-  lastAccessed: Date;
-};
-
-const daysAgo = (n: number) => {
-  const d = new Date();
-  d.setDate(d.getDate() - n);
-  return d;
-};
-
-const documents: RecentDoc[] = [
-  { title: "Q3 Product Development …", type: "Document", lastAccessed: daysAgo(0) },
-  { title: "Feature Specification …", type: "Document", lastAccessed: daysAgo(1) },
-  { title: "Product Roadmap Q1 …", type: "Document", lastAccessed: daysAgo(2) },
-  { title: "User Flow & Interaction …", type: "List", lastAccessed: daysAgo(3) },
-  { title: "Company Database Overview", type: "Database", lastAccessed: daysAgo(12) },
-];
+import { documents, type DocType, type RecentDoc } from "../data/recentDocuments";
 
 export default function DashboardPage() {
   const [showSpinner, setShowSpinner] = React.useState(true);
@@ -156,6 +136,10 @@ export default function DashboardPage() {
                   key={i}
                   className="bg-white/10 backdrop-blur shrink-0 rounded-2xl p-4 flex flex-col hover:cursor-pointer"
                   variants={itemVariant}
+                  onClick={() =>
+                    window.open(`/doc?title=${encodeURIComponent(d.title)}`, "_blank", "noopener,noreferrer")
+                  }
+                  title="Open document"
                 >
                   <div className="ml-1">{getDocIcon(d.type)}</div>
                   <p className="my-4 ml-1 font-semibold text-neutral-100 leading-5 w-[140px] hover:text-neutral-50">
