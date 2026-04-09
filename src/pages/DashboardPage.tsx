@@ -7,7 +7,7 @@ import { FileText, ListTodo, Database as DbIcon } from "lucide-react";
 import avatar1 from "../assets/images/avatar-example-1.png";
 import avatar2 from "../assets/images/avatar-example-2.png";
 import iconUpcoming from "../assets/icons/icon-upcoming.svg";
-import { documents, type DocType, type RecentDoc } from "../data/recentDocuments";
+import { documents, type DocType } from "../data/recentDocuments";
 
 export default function DashboardPage() {
   const [showSpinner, setShowSpinner] = React.useState(true);
