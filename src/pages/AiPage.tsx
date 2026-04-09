@@ -10,7 +10,7 @@ export default function AiPage() {
       <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white">Notion AI</h1>
 
       <div className="relative mt-4 md:mt-6 w-full max-w-[800px] flex-1 min-h-0 flex flex-col">
-        <p className="text-sm sm:text-base md:text-[17px] text-neutral-300">Here are a few things I can do, or ask me anything!</p>
+        <p className="text-sm sm:text-base md:text-[17px] text-neutral-300">Ask me anything!</p>
         <div className="mt-6 md:mt-8 w-full rounded-2xl px-4 sm:px-5 md:px-6 pt-4 sm:pt-5 md:pt-6 pb-3 sm:pb-4 md:pb-4 flex-1 min-h-0 flex flex-col">
           <div className="mt-2 flex-1 min-h-0 overflow-y-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             <div className="w-full space-y-3">
