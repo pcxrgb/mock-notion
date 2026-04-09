@@ -1,4 +1,6 @@
 import React from "react";
+import { motion, useReducedMotion } from "framer-motion";
+import type { Variants } from "framer-motion";
 
 import iconRecent from "../assets/icons/icon-recent.svg";
 import { FileText, ListTodo, Database as DbIcon } from "lucide-react";
@@ -32,6 +34,34 @@ export default function DashboardPage() {
   const [showGreeting, setShowGreeting] = React.useState(false);
   const [showRecent, setShowRecent] = React.useState(false);
   const [showEvents, setShowEvents] = React.useState(false);
+  const shouldReduceMotion = useReducedMotion();
+
+  const listContainer = React.useMemo<Variants>(
+    () =>
+      ({
+      hidden: {},
+      show: {
+        transition: {
+          staggerChildren: shouldReduceMotion ? 0 : 0.08,
+          delayChildren: shouldReduceMotion ? 0 : 0.05,
+        },
+      },
+      }) as Variants,
+    [shouldReduceMotion]
+  );
+
+  const itemVariant = React.useMemo<Variants>(
+    () =>
+      ({
+      hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 10 },
+      show: {
+        opacity: 1,
+        y: 0,
+        transition: { type: "spring", bounce: 0, duration: 0.5 },
+      },
+    }) as Variants,
+    [shouldReduceMotion]
+  );
   React.useEffect(() => {
     const t1 = setTimeout(() => setShowSpinner(false), 1000);
     const t2 = setTimeout(() => setShowGreeting(true), 1100);
@@ -115,9 +145,18 @@ export default function DashboardPage() {
           </div>
 
           <div className="mt-4 w-full overflow-x-auto pr-3 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            <div className="flex items-stretch gap-3 w-max">
+            <motion.div
+              className="flex items-stretch gap-3 w-max"
+              variants={listContainer}
+              initial="hidden"
+              animate={showRecent ? "show" : "hidden"}
+            >
               {documents.slice(0, 6).map((d, i) => (
-                <div key={i} className="bg-white/10 backdrop-blur shrink-0 rounded-2xl p-4 flex flex-col hover:cursor-pointer">
+                <motion.div
+                  key={i}
+                  className="bg-white/10 backdrop-blur shrink-0 rounded-2xl p-4 flex flex-col hover:cursor-pointer"
+                  variants={itemVariant}
+                >
                   <div className="ml-1">{getDocIcon(d.type)}</div>
                   <p className="my-4 ml-1 font-semibold text-neutral-100 leading-5 w-[140px] hover:text-neutral-50">
                     {d.title}
@@ -126,9 +165,9 @@ export default function DashboardPage() {
                     <img src={i % 2 === 0 ? avatar1 : avatar2} alt="" className="w-6 h-6 rounded-full object-cover"/>
                     <p className="text-[17px] font-semibold text-neutral-400 w-[106px] text-right">{formatDocDate(d.lastAccessed)}</p>
                   </div>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </section>
 
@@ -139,9 +178,14 @@ export default function DashboardPage() {
           </div>
 
           <div className="mt-4 w-full rounded-2xl bg-white/10 backdrop-blur px-5 pt-6 pb-4 flex-1 min-h-0 overflow-y-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            <div className="space-y-5">
+            <motion.div
+              className="space-y-5"
+              variants={listContainer}
+              initial="hidden"
+              animate={showEvents ? "show" : "hidden"}
+            >
               {events.map((ev, idx) => (
-                <div key={idx} className="flex items-start gap-6">
+              <motion.div key={idx} className="flex items-start gap-6" variants={itemVariant}>
                   <p
                     className={`w-[183px] shrink-0 text-[17px] font-semibold ${
                       idx === 0 ? "text-orange-400" : "text-neutral-400"
@@ -156,9 +200,9 @@ export default function DashboardPage() {
                       <p className="text-[17px] font-semibold text-neutral-400 mt-3">{ev.time}</p>
                     </div>
                   </div>
-                </div>
+              </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </section>
       </div>
