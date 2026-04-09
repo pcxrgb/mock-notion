@@ -5,6 +5,7 @@ import ic2 from "../assets/icons/icon-document.png"; // Document View
 import ic3 from "../assets/icons/icon-ai-chat.png"; // AI Chat
 import ic4 from "../assets/icons/icon-todo.png"; // TODO
 import ic5 from "../assets/icons/icon-calendar.png"; // Calendar
+import { routes } from "../routes";
 
 export default function TabBar() {
   const icons = [ic2, ic3, ic4, ic5];
@@ -16,10 +17,10 @@ export default function TabBar() {
     window.open(url, name);
   };
   const handlers = [
-    () => openWindow("docScene", "/doc"),
-    () => openWindow("aiScene", "/ai"),
-    () => openWindow("todoScene", "/todo"),
-    () => openWindow("calendarScene", "/calendar"),
+    () => openWindow("docScene", routes.doc),
+    () => openWindow("aiScene", routes.ai),
+    () => openWindow("todoScene", routes.todo),
+    () => openWindow("calendarScene", routes.calendar),
   ];
   return (
     <div

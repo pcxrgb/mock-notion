@@ -1,5 +1,5 @@
 import React from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
 
 import iconRecent from "../assets/icons/icon-recent.svg";
@@ -10,11 +10,7 @@ import iconUpcoming from "../assets/icons/icon-upcoming.svg";
 import { documents, type DocType } from "../data/recentDocuments";
 
 export default function DashboardPage() {
-  const [showSpinner, setShowSpinner] = React.useState(true);
   const [showGreeting, setShowGreeting] = React.useState(false);
-  const [showRecent, setShowRecent] = React.useState(false);
-  const [showEvents, setShowEvents] = React.useState(false);
-  const shouldReduceMotion = useReducedMotion();
 
   const listContainer = React.useMemo<Variants>(
     () =>
@@ -22,36 +18,31 @@ export default function DashboardPage() {
       hidden: {},
       show: {
         transition: {
-          staggerChildren: shouldReduceMotion ? 0 : 0.08,
-          delayChildren: shouldReduceMotion ? 0 : 0.05,
+          staggerChildren: 0.08,
+          delayChildren: 0.05,
         },
       },
       }) as Variants,
-    [shouldReduceMotion]
+    []
   );
 
   const itemVariant = React.useMemo<Variants>(
     () =>
       ({
-      hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 10 },
+      hidden: { opacity: 0, y: 10 },
       show: {
         opacity: 1,
         y: 0,
         transition: { type: "spring", bounce: 0, duration: 0.5 },
       },
     }) as Variants,
-    [shouldReduceMotion]
+    []
   );
   React.useEffect(() => {
-    const t1 = setTimeout(() => setShowSpinner(false), 1000);
-    const t2 = setTimeout(() => setShowGreeting(true), 1100);
-    const t3 = setTimeout(() => setShowRecent(true), 1600);
-    const t4 = setTimeout(() => setShowEvents(true), 2100);
+    setShowGreeting(true);
+    const tHide = setTimeout(() => setShowGreeting(false), 1500);
     return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
-      clearTimeout(t3);
-      clearTimeout(t4);
+      clearTimeout(tHide);
     };
   }, []);
   const colorClasses = [
@@ -116,9 +107,25 @@ export default function DashboardPage() {
     enable-xr
     style={{"--xr-background-material": "regular"}}
     className="w-screen h-screen p-12 flex flex-col items-center shadow border border-white/10 overflow-hidden">
-      <h1 className={`text-5xl font-bold text-white transition-all duration-700 ${showGreeting ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}`}>{getGreeting()}</h1>
-      <div className="relative mt-6 w-full max-w-[1200px] flex-1 min-h-0 flex flex-col gap-8">
-        <section className={`transition-all duration-700 ${showRecent ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}`}>
+      <div className="fixed inset-0 z-50 pointer-events-none">
+        <div className="greeting-overlay">
+          <div
+            enable-xr
+            style={{ "--xr-background-material": "regular" } as React.CSSProperties}
+            className={`flex h-full w-full items-center justify-center transition-all duration-700 ${
+              showGreeting ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+            }`}
+          >
+            <h1 className="text-6xl font-bold text-white">{getGreeting()}</h1>
+          </div>
+        </div>
+      </div>
+      <div
+        className={`relative mt-6 w-full max-w-[1200px] flex-1 min-h-0 flex flex-col gap-8 transition-all duration-700 ${
+          showGreeting ? "opacity-0 translate-y-2" : "opacity-100 translate-y-0"
+        }`}
+      >
+        <motion.section initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 1.7, ease: "easeOut" }}>
           <div className="flex items-center gap-2 text-neutral-300">
             <img src={iconRecent} alt=""/>
             <p className="text-[17px]">Recently visited</p>
@@ -129,7 +136,7 @@ export default function DashboardPage() {
               className="flex items-stretch gap-3 w-max"
               variants={listContainer}
               initial="hidden"
-              animate={showRecent ? "show" : "hidden"}
+              animate="show"
             >
               {documents.slice(0, 6).map((d, i) => (
                 <motion.div
@@ -153,9 +160,9 @@ export default function DashboardPage() {
               ))}
             </motion.div>
           </div>
-        </section>
+        </motion.section>
 
-        <section className={`flex-1 min-h-0 flex flex-col transition-all duration-700 ${showEvents ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}`}>
+        <motion.section className="flex-1 min-h-0 flex flex-col" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 2.2, ease: "easeOut" }}>
           <div className="flex items-center gap-2 text-neutral-300">
             <img src={iconUpcoming} alt="" className="w-5 h-5" />
             <p className="text-[17px]">Upcoming Events</p>
@@ -166,7 +173,7 @@ export default function DashboardPage() {
               className="space-y-5"
               variants={listContainer}
               initial="hidden"
-              animate={showEvents ? "show" : "hidden"}
+              animate="show"
             >
               {events.map((ev, idx) => (
               <motion.div key={idx} className="flex items-start gap-6" variants={itemVariant}>
@@ -188,13 +195,8 @@ export default function DashboardPage() {
               ))}
             </motion.div>
           </div>
-        </section>
+        </motion.section>
       </div>
-      {showSpinner && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div className="w-16 h-16 rounded-full border-4 border-white/30 border-t-white/90 animate-spin" />
-        </div>
-      )}
     </div>
   );
 }

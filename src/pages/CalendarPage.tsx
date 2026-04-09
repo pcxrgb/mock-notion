@@ -13,23 +13,6 @@ export default function CalendarPage() {
       }
       className="h-screen w-screen rounded p-4 font-bold text-white"
     >
-      <style>
-        {`
-          .fc .fc-button {
-            background-color: rgb(15 23 42);
-            color: white;
-            border-color: rgb(15 23 42);
-          }
-          .fc .fc-button:hover {
-            background-color: rgba(15, 23, 42, 0.85);
-          }
-          .fc .fc-button:disabled {
-            background-color: rgb(15 23 42);
-            color: white;
-            opacity: 0.6;
-          }
-        `}
-      </style>
       <FullCalendar
         plugins={[dayGridPlugin]}
         initialView="dayGridMonth"
