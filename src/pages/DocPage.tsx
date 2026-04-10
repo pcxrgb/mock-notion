@@ -17,9 +17,9 @@ export default function DocPage() {
     <div
       enable-xr
       style={{ "--xr-background-material": "regular" } as React.CSSProperties}
-      className="flex h-screen w-screen gap-6 overflow-hidden border border-white/10 p-12 shadow"
+      className="flex h-screen w-screen flex-col gap-6 overflow-hidden border border-white/10 p-12 shadow lg:flex-row"
     >
-      <div className="hidden h-full w-1/5 min-w-[240px] flex-col rounded-2xl bg-white/5 px-5 py-6 md:flex">
+      <div className="hidden h-full w-1/5 min-w-[240px] flex-col rounded-2xl bg-white/5 px-5 py-6 lg:flex">
         <h2 className="text-lg font-semibold text-white/90">Documents</h2>
         <div className="mt-4 min-h-0 flex-1 overflow-y-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           <ul className="space-y-2">
@@ -47,7 +47,7 @@ export default function DocPage() {
       </div>
 
       <div
-        className={`h-full flex-1 overflow-auto rounded-2xl px-10 py-8 md:hidden ${docList[0] ? "bg-white text-neutral-900" : "bg-white/10 text-neutral-200"}`}
+        className={`h-full flex-1 overflow-auto rounded-2xl px-10 py-8 lg:hidden ${docList[0] ? "bg-white text-neutral-900" : "bg-white/10 text-neutral-200"}`}
       >
         <div className="mx-auto max-w-[900px]">
           {!docList[0] ? (
@@ -92,7 +92,7 @@ export default function DocPage() {
       </div>
 
       <div
-        className={`hidden h-full flex-1 overflow-auto rounded-2xl px-10 py-8 md:block ${currentIdx != null ? "bg-white text-neutral-900" : "bg-white/10 text-neutral-200"}`}
+        className={`hidden h-full flex-1 overflow-auto rounded-2xl px-10 py-8 lg:block ${currentIdx != null ? "bg-white text-neutral-900" : "bg-white/10 text-neutral-200"}`}
       >
         <div className="mx-auto max-w-[900px]">
           {currentIdx == null || !docList[currentIdx] ? (
