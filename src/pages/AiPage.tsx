@@ -62,6 +62,13 @@ export default function AiPage() {
               ></textarea>
             </div>
           </div>
+          <div>
+            <textarea
+              className="w-full resize-none rounded-xl px-3 py-3 bg-white/10 ring-1 ring-white/10 text-white/90 placeholder-white/60 outline-none leading-6 sm:leading-7"
+              rows={3}
+              placeholder="Ask, search, or make anything..."
+            ></textarea>
+          </div>
         </div>
       </div>
     </div>
