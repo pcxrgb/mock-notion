@@ -1,16 +1,54 @@
-import React, { useState } from "react";
+import React from "react";
+import { documents } from "../data/recentDocuments";
 
 type TodoItem = { id: number; text: string; done: boolean };
 
-const initialTodos: TodoItem[] = [
-  { id: 1, text: "Revise the design plan", done: false },
-  { id: 2, text: "Review the interaction effects with David", done: true },
-  { id: 3, text: "Wait for David to fix the bugs", done: false },
-  { id: 4, text: "Continue the architectural software research", done: false },
+const defaultTodos: TodoItem[] = [
+  { id: 1, text: "Review requirements", done: false },
+  { id: 2, text: "Outline tasks and owners", done: true },
+  { id: 3, text: "Track open questions", done: false },
+  { id: 4, text: "Schedule follow-up", done: false },
 ];
 
 export default function TodoPage() {
-  const [todos, setTodos] = useState<TodoItem[]>(initialTodos);
+  const listItems = React.useMemo(
+    () => documents.filter((d) => d.type === "List"),
+    [],
+  );
+  const [currentIdx, setCurrentIdx] = React.useState<number | null>(() => {
+    if (typeof window === "undefined") return null;
+    const p = new URLSearchParams(window.location.search);
+    const t = p.get("title");
+    if (!t) return null;
+    const idx = listItems.findIndex((d) => d.title === t);
+    return idx >= 0 ? idx : null;
+  });
+
+  const getTodosForTitle = React.useCallback((title: string): TodoItem[] => {
+    if (title.toLowerCase().includes("user flow")) {
+      return [
+        { id: 1, text: "List core screens", done: true },
+        { id: 2, text: "Map interactions", done: false },
+        { id: 3, text: "Validate edge cases", done: false },
+        { id: 4, text: "Share review notes", done: false },
+      ];
+    }
+    return defaultTodos;
+  }, []);
+
+  const [todos, setTodos] = React.useState<TodoItem[]>(
+    currentIdx != null && listItems[currentIdx]
+      ? getTodosForTitle(listItems[currentIdx].title)
+      : [],
+  );
+
+  React.useEffect(() => {
+    if (currentIdx != null && listItems[currentIdx]) {
+      setTodos(getTodosForTitle(listItems[currentIdx].title));
+    } else {
+      setTodos([]);
+    }
+  }, [currentIdx, listItems, getTodosForTitle]);
 
   const toggle = (id: number) =>
     setTodos((prev) =>
@@ -21,35 +59,118 @@ export default function TodoPage() {
     <div
       enable-xr
       style={{ "--xr-background-material": "regular" } as React.CSSProperties}
-      className="flex h-screen w-screen flex-col items-start overflow-hidden border border-white/10 p-12 shadow"
+      className="flex h-screen w-screen flex-col gap-6 overflow-hidden border border-white/10 p-12 shadow lg:flex-row"
     >
-      <h1 className="text-5xl font-bold text-white">TODO</h1>
-      <div className="relative mt-6 flex min-h-0 w-full max-w-[800px] flex-1 flex-col">
-        <p className="text-[17px] text-neutral-300">Today</p>
-        <div className="mt-3 flex min-h-0 w-full flex-1 flex-col rounded-2xl bg-white/10 px-6 pt-6 pb-4 backdrop-blur">
-          <div className="mt-2 min-h-0 flex-1 overflow-y-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            <ul className="space-y-3">
-              {todos.map((t) => (
-                <li key={t.id} className="flex items-start gap-2 sm:gap-3">
-                  <input
-                    type="checkbox"
-                    className="mt-0.5 h-4 w-4 accent-cyan-400 sm:mt-1 sm:h-5 sm:w-5"
-                    onChange={() => toggle(t.id)}
-                    aria-label={`todo-${t.id}`}
-                    checked={t.done}
-                  />
-                  <span
-                    className={[
-                      "break-words text-base font-semibold sm:text-[17px]",
-                      t.done ? "text-white/80 line-through" : "text-white/95",
-                    ].join(" ")}
+      <div className="hidden h-full w-1/5 min-w-[240px] flex-col rounded-2xl bg-white/5 px-5 py-6 lg:flex">
+        <h2 className="text-lg font-semibold text-white/90">Lists</h2>
+        <div className="mt-4 min-h-0 flex-1 overflow-y-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <ul className="space-y-2">
+            {listItems.map((d, i) => {
+              const selected = currentIdx === i;
+              return (
+                <li key={i}>
+                  <button
+                    type="button"
+                    onClick={() => setCurrentIdx(i)}
+                    title={d.title}
+                    className={`w-full truncate rounded-lg px-3 py-2 text-left text-[15px] transition-colors ${
+                      selected
+                        ? "bg-white/10 text-white"
+                        : "text-white/90 hover:bg-white/10"
+                    }`}
                   >
-                    {t.text}
-                  </span>
+                    {d.title}
+                  </button>
                 </li>
-              ))}
-            </ul>
-          </div>
+              );
+            })}
+          </ul>
+        </div>
+      </div>
+
+      <div
+        className={`h-full flex-1 overflow-auto rounded-2xl px-10 py-8 lg:hidden ${
+          listItems[0] ? "bg-white text-neutral-900" : "bg-white/10 text-neutral-200"
+        }`}
+      >
+        <div className="mx-auto max-w-[900px]">
+          {!listItems[0] ? (
+            <h1 className="text-2xl font-semibold">No List</h1>
+          ) : (
+            <>
+              <h1 className="text-3xl font-bold">{listItems[0].title}</h1>
+              <div className="mt-6">
+                <ul className="space-y-3">
+                  {getTodosForTitle(listItems[0].title).map((t) => (
+                    <li key={t.id} className="flex items-start gap-3">
+                      <input
+                        type="checkbox"
+                        className="mt-1 h-5 w-5 accent-cyan-500"
+                        onChange={() => {}}
+                        checked={t.done}
+                        readOnly
+                      />
+                      <span
+                        className={[
+                          "break-words text-[17px] font-semibold",
+                          t.done ? "text-neutral-700 line-through" : "text-neutral-900",
+                        ].join(" ")}
+                      >
+                        {t.text}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <p className="mt-8 text-[14px] text-neutral-600">
+                Last updated: Today — Checklist
+              </p>
+            </>
+          )}
+        </div>
+      </div>
+
+      <div
+        className={`hidden h-full flex-1 overflow-auto rounded-2xl px-10 py-8 lg:block ${
+          currentIdx != null ? "bg-white text-neutral-900" : "bg-white/10 text-neutral-200"
+        }`}
+      >
+        <div className="mx-auto max-w-[900px]">
+          {currentIdx == null || !listItems[currentIdx] ? (
+            <h1 className="text-2xl font-semibold">No List</h1>
+          ) : (
+            <>
+              <h1 className="text-3xl font-bold">
+                {listItems[currentIdx].title}
+              </h1>
+              <div className="mt-6">
+                <ul className="space-y-3">
+                  {todos.map((t) => (
+                    <li key={t.id} className="flex items-start gap-3">
+                      <input
+                        type="checkbox"
+                        className="mt-1 h-5 w-5 accent-cyan-500"
+                        onChange={() => toggle(t.id)}
+                        aria-label={`todo-${t.id}`}
+                        checked={t.done}
+                      />
+                      <span
+                        className={[
+                          "break-words text-[17px] font-semibold",
+                          t.done ? "text-neutral-700 line-through" : "text-neutral-900",
+                        ].join(" ")}
+                      >
+                        {t.text}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <p className="mt-8 text-[14px] text-neutral-600">
+                Last updated: Today — Checklist
+              </p>
+            </>
+          )}
         </div>
       </div>
     </div>

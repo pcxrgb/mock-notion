@@ -168,14 +168,15 @@ export default function DashboardPage() {
                   key={i}
                   className="flex shrink-0 flex-col rounded-2xl bg-white/10 p-4 backdrop-blur hover:cursor-pointer"
                   variants={itemVariant}
-                  onClick={() =>
-                    window.open(
-                      `/doc?title=${encodeURIComponent(d.title)}`,
-                      "_blank",
-                      "noopener,noreferrer",
-                    )
-                  }
-                  title="Open document"
+                  onClick={() => {
+                    if (d.type === "Database") return;
+                    const url =
+                      d.type === "List"
+                        ? `/todo?title=${encodeURIComponent(d.title)}`
+                        : `/doc?title=${encodeURIComponent(d.title)}`;
+                    window.open(url, "_blank", "noopener,noreferrer");
+                  }}
+                  title={d.type === "Database" ? "No action" : "Open document"}
                 >
                   <div className="ml-1">{getDocIcon(d.type)}</div>
                   <p className="my-4 ml-1 w-[140px] leading-5 font-semibold text-neutral-100 hover:text-neutral-50">
