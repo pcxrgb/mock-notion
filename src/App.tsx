@@ -12,7 +12,7 @@ function App() {
   const location = useLocation();
   return (
     <div className="relative h-screen w-screen overflow-hidden">
-      <div className="absolute inset-0 overflow-auto">
+      <div className="absolute inset-0 overflow-hidden">
         <div className="flex h-full w-full items-center justify-center">
           <Routes>
             <Route path={routes.root} element={<DashboardPage />} />

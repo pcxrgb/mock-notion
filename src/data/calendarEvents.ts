@@ -43,4 +43,3 @@ export const events: CalendarEvent[] = Array.from({ length: 8 }).map((_, i) => {
     colorClass: colorClasses[i % colorClasses.length],
   };
 });
-

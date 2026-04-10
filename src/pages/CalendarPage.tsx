@@ -12,14 +12,14 @@ export default function CalendarPage() {
           "--xr-background-material": "regular",
         } as React.CSSProperties
       }
-      className="h-screen w-screen rounded p-4 font-bold text-white"
+      className="h-screen w-screen border border-white/10 p-4 font-bold text-white shadow"
     >
       <FullCalendar
         plugins={[dayGridPlugin]}
         initialView="dayGridMonth"
         height="auto"
         firstDay={1}
-        events={events.map(ev => ({
+        events={events.map((ev) => ({
           title: ev.title,
           start: ev.start,
           end: ev.end,
