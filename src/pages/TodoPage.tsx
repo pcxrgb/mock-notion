@@ -90,12 +90,16 @@ export default function TodoPage() {
 
       <div
         className={`h-full flex-1 overflow-auto rounded-2xl px-10 py-8 lg:hidden ${
-          listItems[0] ? "bg-white text-neutral-900" : "bg-white/10 text-neutral-200"
+          listItems[0]
+            ? "bg-white text-neutral-900"
+            : "bg-white/10 text-neutral-200"
         }`}
       >
         <div className="mx-auto max-w-[900px]">
           {!listItems[0] ? (
-            <h1 className="text-2xl font-semibold">Select a list to get started</h1>
+            <h1 className="text-2xl font-semibold">
+              Select a list to get started
+            </h1>
           ) : (
             <>
               <h1 className="text-3xl font-bold">{listItems[0].title}</h1>
@@ -112,8 +116,10 @@ export default function TodoPage() {
                       />
                       <span
                         className={[
-                          "break-words text-[17px] font-semibold",
-                          t.done ? "text-neutral-700 line-through" : "text-neutral-900",
+                          "text-[17px] font-semibold break-words",
+                          t.done
+                            ? "text-neutral-700 line-through"
+                            : "text-neutral-900",
                         ].join(" ")}
                       >
                         {t.text}
@@ -132,12 +138,16 @@ export default function TodoPage() {
 
       <div
         className={`hidden h-full flex-1 overflow-auto rounded-2xl px-10 py-8 lg:block ${
-          currentIdx != null ? "bg-white text-neutral-900" : "bg-white/10 text-neutral-200"
+          currentIdx != null
+            ? "bg-white text-neutral-900"
+            : "bg-white/10 text-neutral-200"
         }`}
       >
         <div className="mx-auto max-w-[900px]">
           {currentIdx == null || !listItems[currentIdx] ? (
-            <h1 className="text-2xl font-semibold">Click a list on the left to get started</h1>
+            <h1 className="text-2xl font-semibold">
+              Click a list on the left to get started
+            </h1>
           ) : (
             <>
               <h1 className="text-3xl font-bold">
@@ -156,8 +166,10 @@ export default function TodoPage() {
                       />
                       <span
                         className={[
-                          "break-words text-[17px] font-semibold",
-                          t.done ? "text-neutral-700 line-through" : "text-neutral-900",
+                          "text-[17px] font-semibold break-words",
+                          t.done
+                            ? "text-neutral-700 line-through"
+                            : "text-neutral-900",
                         ].join(" ")}
                       >
                         {t.text}
