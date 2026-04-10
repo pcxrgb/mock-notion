@@ -8,6 +8,7 @@ import avatar1 from "../assets/images/avatar-example-1.png";
 import avatar2 from "../assets/images/avatar-example-2.png";
 import iconUpcoming from "../assets/icons/icon-upcoming.svg";
 import { documents, type DocType } from "../data/recentDocuments";
+import { events as calendarEvents } from "../data/calendarEvents";
 
 export default function DashboardPage() {
   const [showGreeting, setShowGreeting] = React.useState(false);
@@ -45,21 +46,26 @@ export default function DashboardPage() {
       clearTimeout(tHide);
     };
   }, []);
-  const colorClasses = [
-    "bg-cyan-400",
-    "bg-emerald-400",
-    "bg-yellow-400",
-    "bg-fuchsia-400",
-    "bg-sky-400",
-    "bg-purple-400",
-    "bg-rose-400",
-    "bg-lime-400",
-  ];
-
   const formatDateLabel = (date: Date, idx: number) => {
     const options: Intl.DateTimeFormatOptions = { weekday: "long", month: "long", day: "numeric" };
     const label = date.toLocaleDateString(undefined, options);
     return idx === 0 ? `${label}` : label;
+  };
+
+  const formatTimeRange = (start: Date, end?: Date) => {
+    const pad = (n: number) => (n < 10 ? `0${n}` : `${n}`);
+    const to12h = (h: number) => {
+      const period = h >= 12 ? "PM" : "AM";
+      const hh = h % 12 === 0 ? 12 : h % 12;
+      return { hh, period };
+    };
+    const sh = start.getHours();
+    const sm = start.getMinutes();
+    const eh = (end ?? start).getHours();
+    const em = (end ?? start).getMinutes();
+    const s = to12h(sh);
+    const e = to12h(eh);
+    return `${s.hh}:${pad(sm)} ${s.period} - ${e.hh}:${pad(em)} ${e.period}`;
   };
 
   const formatDocDate = (date: Date) => {
@@ -72,28 +78,20 @@ export default function DashboardPage() {
     return <DbIcon className="w-8 h-8 text-neutral-200" aria-label="Database" />;
   };
 
-  const events = Array.from({ length: 8 }).map((_, i) => {
-    const day = new Date(Date.now());
-    day.setDate(day.getDate() + i);
-    const startHour = 14 + (i % 3);
-    const endHour = startHour + 1;
-    const pad = (n: number) => (n < 10 ? `0${n}` : `${n}`);
-    const to12h = (h: number) => {
-      const period = h >= 12 ? "PM" : "AM";
-      const hh = h % 12 === 0 ? 12 : h % 12;
-      return { hh, period };
-    };
-    const s = to12h(startHour);
-    const e = to12h(endHour);
-    const startMin = (i % 2) * 15;
-    const endMin = startMin;
-    return {
-      dateLabel: formatDateLabel(day, i),
-      name: i % 2 === 0 ? "Research" : "Meeting",
-      time: `${s.hh}:${pad(startMin)} ${s.period} - ${e.hh}:${pad(endMin)} ${e.period}`,
-      colorClass: colorClasses[i % colorClasses.length],
-    };
-  });
+  const upcoming = calendarEvents
+    .filter(ev => {
+      const todayStart = new Date();
+      todayStart.setHours(0, 0, 0, 0);
+      return ev.start >= todayStart;
+    })
+    .sort((a, b) => a.start.getTime() - b.start.getTime())
+    .slice(0, 8)
+    .map((ev, i) => ({
+      dateLabel: formatDateLabel(ev.start, i),
+      name: ev.title,
+      time: formatTimeRange(ev.start, ev.end),
+      colorClass: ev.colorClass,
+    }));
 
   const getGreeting = () => {
     const hour = new Date().getHours();
@@ -175,7 +173,7 @@ export default function DashboardPage() {
               initial="hidden"
               animate="show"
             >
-              {events.map((ev, idx) => (
+              {upcoming.map((ev, idx) => (
               <motion.div key={idx} className="flex items-start gap-6" variants={itemVariant}>
                   <p
                     className={`w-[183px] shrink-0 text-[17px] font-semibold ${

@@ -1,6 +1,7 @@
 import React from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
+import { events } from "../data/calendarEvents";
 
 export default function CalendarPage() {
   return (
@@ -18,6 +19,11 @@ export default function CalendarPage() {
         initialView="dayGridMonth"
         height="auto"
         firstDay={1}
+        events={events.map(ev => ({
+          title: ev.title,
+          start: ev.start,
+          end: ev.end,
+        }))}
       />
     </div>
   );
