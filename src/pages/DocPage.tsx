@@ -51,7 +51,9 @@ export default function DocPage() {
       >
         <div className="mx-auto max-w-[900px]">
           {!docList[0] ? (
-            <h1 className="text-2xl font-semibold">Select a document to get started</h1>
+            <h1 className="text-2xl font-semibold">
+              Select a document to get started
+            </h1>
           ) : (
             <>
               <h1 className="text-3xl font-bold">{docList[0].title}</h1>
@@ -96,7 +98,9 @@ export default function DocPage() {
       >
         <div className="mx-auto max-w-[900px]">
           {currentIdx == null || !docList[currentIdx] ? (
-            <h1 className="text-2xl font-semibold">Click a document on the left to get started</h1>
+            <h1 className="text-2xl font-semibold">
+              Click a document on the left to get started
+            </h1>
           ) : (
             <>
               <h1 className="text-3xl font-bold">
