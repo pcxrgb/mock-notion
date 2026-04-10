@@ -95,7 +95,7 @@ export default function TodoPage() {
       >
         <div className="mx-auto max-w-[900px]">
           {!listItems[0] ? (
-            <h1 className="text-2xl font-semibold">No List</h1>
+            <h1 className="text-2xl font-semibold">Select a list to get started</h1>
           ) : (
             <>
               <h1 className="text-3xl font-bold">{listItems[0].title}</h1>
@@ -137,7 +137,7 @@ export default function TodoPage() {
       >
         <div className="mx-auto max-w-[900px]">
           {currentIdx == null || !listItems[currentIdx] ? (
-            <h1 className="text-2xl font-semibold">No List</h1>
+            <h1 className="text-2xl font-semibold">Click a list on the left to get started</h1>
           ) : (
             <>
               <h1 className="text-3xl font-bold">
