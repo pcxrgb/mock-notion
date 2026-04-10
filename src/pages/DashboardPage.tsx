@@ -123,17 +123,7 @@ export default function DashboardPage() {
     >
       <div className="pointer-events-none fixed inset-0 z-50">
         <div className="greeting-overlay absolute inset-0">
-          <div
-            enable-xr
-            style={
-              {
-                "--xr-background-material": (showGreeting
-                  ? "regular"
-                  : "transparent") as any,
-              } as React.CSSProperties
-            }
-            className="flex h-full w-full items-center justify-center"
-          >
+          <div className="flex h-full w-full items-center justify-center">
             <AnimatePresence mode="wait">
               {showGreeting && (
                 <motion.h1
