@@ -1,6 +1,7 @@
 import React from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
+import { events } from "../data/calendarEvents";
 
 export default function CalendarPage() {
   return (
@@ -11,30 +12,18 @@ export default function CalendarPage() {
           "--xr-background-material": "regular",
         } as React.CSSProperties
       }
-      className="h-screen w-screen rounded p-4 font-bold text-white"
+      className="h-screen w-screen border border-white/10 p-4 font-bold text-white shadow"
     >
-      <style>
-        {`
-          .fc .fc-button {
-            background-color: rgb(15 23 42);
-            color: white;
-            border-color: rgb(15 23 42);
-          }
-          .fc .fc-button:hover {
-            background-color: rgba(15, 23, 42, 0.85);
-          }
-          .fc .fc-button:disabled {
-            background-color: rgb(15 23 42);
-            color: white;
-            opacity: 0.6;
-          }
-        `}
-      </style>
       <FullCalendar
         plugins={[dayGridPlugin]}
         initialView="dayGridMonth"
         height="auto"
         firstDay={1}
+        events={events.map((ev) => ({
+          title: ev.title,
+          start: ev.start,
+          end: ev.end,
+        }))}
       />
     </div>
   );
