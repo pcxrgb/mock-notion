@@ -13,6 +13,7 @@ import { events as calendarEvents } from "../data/calendarEvents";
 export default function DashboardPage() {
   const [showGreeting, setShowGreeting] = React.useState(false);
 
+
   const listContainer = React.useMemo<Variants>(
     () =>
       ({
